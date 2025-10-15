@@ -1,0 +1,47 @@
+-- =================================================================
+-- SCRIPT PARA CREAR TABLESPACE, USUARIOS Y ROL
+-- (Ejecuta ADMIN)
+-- =================================================================
+
+-- 1. Eliminar objetos para limpieza (Opcional, pero recomendado para re-ejecución)
+REVOKE DEVELOPER FROM ANDRE_DEV, LUIS_DEV;
+DROP USER ANDRE_DEV CASCADE;
+DROP USER LUIS_DEV CASCADE;
+DROP ROLE DEVELOPER;
+-- Eliminar tablespace (Requiere que no haya archivos en uso, ajustar si es necesario)
+-- DROP TABLESPACE DEV_ORACLE INCLUDING CONTENTS AND DATAFILES;
+
+-- 2. Crear tablespace
+CREATE TABLESPACE DEV_ORACLE
+    DATAFILE '/opt/oracle/oradata/XE/XEPDB1/dev_oracle.dbf' SIZE 300M
+    AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED;
+
+
+-- 3. Crear usuario ANDRE_DEV (DEV1) en el tablespace DEV_ORACLE
+CREATE USER ANDRE_DEV IDENTIFIED BY AndreDevPass2025
+    DEFAULT TABLESPACE DEV_ORACLE
+    TEMPORARY TABLESPACE temp;
+
+-- 4. Crear usuario LUIS_DEV (DEV2) en el tablespace DEV_ORACLE
+CREATE USER LUIS_DEV IDENTIFIED BY OracleUserPass2025
+    DEFAULT TABLESPACE DEV_ORACLE
+    TEMPORARY TABLESPACE temp;
+
+-- 5. Crear rol DEVELOPER
+CREATE ROLE DEVELOPER;
+
+-- 6. Privilegios del rol DEVELOPER
+GRANT CONNECT, RESOURCE TO DEVELOPER;
+GRANT CREATE SESSION TO DEVELOPER;
+GRANT CREATE TABLE, CREATE VIEW, CREATE SEQUENCE, CREATE PROCEDURE TO DEVELOPER;
+GRANT CREATE ANY SYNONYM TO DEVELOPER;
+GRANT UNLIMITED TABLESPACE TO DEVELOPER;
+
+-- 7. Asignar rol a los usuarios
+GRANT DEVELOPER TO ANDRE_DEV;
+GRANT DEVELOPER TO LUIS_DEV;
+
+-- 8. Permiso de 'Connect' extra por si acaso
+GRANT CREATE SESSION TO ANDRE_DEV, LUIS_DEV;
+
+COMMIT;
