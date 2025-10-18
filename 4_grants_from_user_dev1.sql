@@ -2,6 +2,7 @@
 
 -- ============================================
 -- GRANTS: Permisos para el usuario LUIS
+-- Se eliminan los comandos de SYNONYM que causaban ORA-01031.
 -- ============================================
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON department TO LUIS;
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON province TO LUIS;
@@ -13,19 +14,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON rol TO LUIS;
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON user_table TO LUIS;
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON transactions TO LUIS;
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON transaction_detail TO LUIS;
-COMMIT;
-
--- ============================================
--- SINÓNIMOS: Acceso directo desde el esquema LUIS
--- ============================================
-CREATE OR REPLACE SYNONYM LUIS.department FOR ANDRE_DEV.department;
-CREATE OR REPLACE SYNONYM LUIS.province FOR ANDRE_DEV.province;
-CREATE OR REPLACE SYNONYM LUIS.district FOR ANDRE_DEV.district;
-CREATE OR REPLACE SYNONYM LUIS.provider FOR ANDRE_DEV.provider;
-CREATE OR REPLACE SYNONYM LUIS.client FOR ANDRE_DEV.client;
-CREATE OR REPLACE SYNONYM LUIS.client_user FOR ANDRE_DEV.client_user;
-CREATE OR REPLACE SYNONYM LUIS.rol FOR ANDRE_DEV.rol;
-CREATE OR REPLACE SYNONYM LUIS.user_table FOR ANDRE_DEV.user_table;
-CREATE OR REPLACE SYNONYM LUIS.transactions FOR ANDRE_DEV.transactions;
-CREATE OR REPLACE SYNONYM LUIS.transaction_detail FOR ANDRE_DEV.transaction_detail;
 COMMIT;
