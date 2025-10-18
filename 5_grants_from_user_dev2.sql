@@ -1,7 +1,10 @@
--- =================================================================
--- GRANTS DESDE LUIS_DEV (DEV2) hacia ANDRE_DEV (DEV1)
--- =================================================================
+-- Ejecutado por LUIS
 
--- ANDRE_DEV necesita ver el detalle de reportes y productos
-GRANT SELECT ON product TO ANDRE_DEV;
-GRANT SELECT ON report_detail TO ANDRE_DEV;
+-- ============================================
+-- GRANTS: Permisos para que ANDRE_DEV pueda referenciar/consultar y acceder a mis tablas.
+-- ============================================
+GRANT SELECT, REFERENCES ON product TO ANDRE_DEV;
+GRANT SELECT, REFERENCES ON inventory_movement TO ANDRE_DEV;
+GRANT SELECT, REFERENCES ON report TO ANDRE_DEV;
+GRANT SELECT, REFERENCES ON report_detail TO ANDRE_DEV;
+COMMIT;

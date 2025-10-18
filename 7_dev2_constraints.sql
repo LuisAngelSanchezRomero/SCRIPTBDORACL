@@ -1,25 +1,30 @@
--- =================================================================
--- CONSTRAINTS (FOREIGN KEYS) PARA LUIS_DEV (DEV2)
--- =================================================================
+-- Ejecutado por LUIS
 
--- inventory_movement a product
-ALTER TABLE inventory_movement ADD CONSTRAINT fk_inventory_product FOREIGN KEY (product_code) REFERENCES product (product_code);
+-- ===================================
+-- RELACIONES INTERNAS (LUIS)
+-- ===================================
+ALTER TABLE report 
+ADD CONSTRAINT fk_report_user_table 
+FOREIGN KEY (user_table_id) 
+REFERENCES ANDRE_DEV.user_table (id); 
 
--- transaction_detail a ANDRE_DEV.transactions
--- (Se necesita que ANDRE_DEV haya otorgado SELECT, REFERENCES en transactions)
-ALTER TABLE transaction_detail ADD CONSTRAINT fk_tdetail_transaction FOREIGN KEY (transaction_id) REFERENCES ANDRE_DEV.transactions (id);
+ALTER TABLE report_detail 
+ADD CONSTRAINT fk_report_detail_report 
+FOREIGN KEY (report_id) 
+REFERENCES report (id);
 
--- transaction_detail a product
-ALTER TABLE transaction_detail ADD CONSTRAINT fk_tdetail_product FOREIGN KEY (product_code) REFERENCES product (product_code);
+-- ===================================
+-- FKs Cruzados con ANDRE_DEV
+-- ===================================
+ALTER TABLE product 
+ADD CONSTRAINT fk_product_provider 
+FOREIGN KEY (provider_id) 
+REFERENCES ANDRE_DEV.provider(id);
 
--- report_detail a ANDRE_DEV.report
--- (Se necesita que ANDRE_DEV haya otorgado SELECT, REFERENCES en report)
-ALTER TABLE report_detail ADD CONSTRAINT fk_rdetail_report FOREIGN KEY (report_id) REFERENCES ANDRE_DEV.report (id);
+-- FK de report_detail a transactions (en ANDRE_DEV)
+ALTER TABLE report_detail 
+ADD CONSTRAINT fk_rdetail_transaction 
+FOREIGN KEY (transaction_id) 
+REFERENCES ANDRE_DEV.transactions(id);
 
--- report_detail a ANDRE_DEV.transactions
--- (Se necesita que ANDRE_DEV haya otorgado SELECT, REFERENCES en transactions)
-ALTER TABLE report_detail ADD CONSTRAINT fk_rdetail_transaction FOREIGN KEY (transaction_id) REFERENCES ANDRE_DEV.transactions (id);
-
--- provider a ANDRE_DEV.district
--- (Se necesita que ANDRE_DEV haya otorgado SELECT, REFERENCES en district)
-ALTER TABLE provider ADD CONSTRAINT fk_provider_district FOREIGN KEY (district_id) REFERENCES ANDRE_DEV.district (id);
+COMMIT;

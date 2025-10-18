@@ -1,15 +1,31 @@
--- =================================================================
--- GRANTS DESDE ANDRE_DEV (DEV1) hacia LUIS_DEV (DEV2)
--- =================================================================
+-- Ejecutado por ANDRE_DEV
 
--- Permisos para que LUIS_DEV pueda referenciar las tablas de ANDRE_DEV
-GRANT SELECT, REFERENCES ON transactions TO LUIS_DEV;
-GRANT SELECT, REFERENCES ON report TO LUIS_DEV;
-GRANT SELECT, REFERENCES ON district TO LUIS_DEV;
+-- ============================================
+-- GRANTS: Permisos para el usuario LUIS
+-- ============================================
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON department TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON province TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON district TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON provider TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON client TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON client_user TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON rol TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON user_table TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON transactions TO LUIS;
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES ON transaction_detail TO LUIS;
+COMMIT;
 
--- Permisos necesarios para la correcta inserción de datos (Si es que LUIS_DEV necesita hacer inserts en estas tablas)
--- GRANT SELECT ON rol TO LUIS_DEV;
--- GRANT SELECT ON user_table TO LUIS_DEV;
--- GRANT SELECT ON client TO LUIS_DEV;
--- GRANT SELECT ON departament TO LUIS_DEV;
--- GRANT SELECT ON province TO LUIS_DEV;
+-- ============================================
+-- SINÓNIMOS: Acceso directo desde el esquema LUIS
+-- ============================================
+CREATE OR REPLACE SYNONYM LUIS.department FOR ANDRE_DEV.department;
+CREATE OR REPLACE SYNONYM LUIS.province FOR ANDRE_DEV.province;
+CREATE OR REPLACE SYNONYM LUIS.district FOR ANDRE_DEV.district;
+CREATE OR REPLACE SYNONYM LUIS.provider FOR ANDRE_DEV.provider;
+CREATE OR REPLACE SYNONYM LUIS.client FOR ANDRE_DEV.client;
+CREATE OR REPLACE SYNONYM LUIS.client_user FOR ANDRE_DEV.client_user;
+CREATE OR REPLACE SYNONYM LUIS.rol FOR ANDRE_DEV.rol;
+CREATE OR REPLACE SYNONYM LUIS.user_table FOR ANDRE_DEV.user_table;
+CREATE OR REPLACE SYNONYM LUIS.transactions FOR ANDRE_DEV.transactions;
+CREATE OR REPLACE SYNONYM LUIS.transaction_detail FOR ANDRE_DEV.transaction_detail;
+COMMIT;

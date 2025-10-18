@@ -1,33 +1,72 @@
--- =================================================================
--- CONSTRAINTS (FOREIGN KEYS) PARA ANDRE_DEV (DEV1)
--- =================================================================
+-- Ejecutado por ANDRE_DEV
 
--- user_table a rol
-ALTER TABLE user_table
-ADD CONSTRAINT fk_user_table_rol FOREIGN KEY (rol_id)
-REFERENCES rol (id);
+-- ===========================================
+-- RESTRICCIÓN: unitary_price NOT NULL 
+-- ===========================================
+ALTER TABLE transaction_detail MODIFY unitary_price NUMBER(10,2) NOT NULL;
 
--- client a user_table
-ALTER TABLE client
-ADD CONSTRAINT fk_client_user FOREIGN KEY (user_id)
-REFERENCES user_table (id);
+-- ===================================
+-- RELACIONES INTERNAS (ANDRE_DEV)
+-- ===================================
 
--- report a user_table (ACTUALIZADO: antes manager, ahora user_table)
-ALTER TABLE report
-ADD CONSTRAINT fk_report_user FOREIGN KEY (manager_id) -- manager_id es el nombre de columna en report
-REFERENCES user_table (id);
-
--- transactions a client
-ALTER TABLE transactions
-ADD CONSTRAINT fk_transactions_client FOREIGN KEY (client_id)
-REFERENCES client (id);
-
--- province a departament
+-- province → department
 ALTER TABLE province
-ADD CONSTRAINT fk_province_departament FOREIGN KEY (departament_id)
-REFERENCES departament (id);
+    ADD CONSTRAINT fk_province_department
+    FOREIGN KEY (department_id)
+    REFERENCES department(id);
 
--- district a province
+-- district → province
 ALTER TABLE district
-ADD CONSTRAINT fk_district_province FOREIGN KEY (province_id)
-REFERENCES province (id);
+    ADD CONSTRAINT fk_district_province
+    FOREIGN KEY (province_id)
+    REFERENCES province(id);
+
+-- provider → district
+ALTER TABLE provider
+    ADD CONSTRAINT fk_provider_district
+    FOREIGN KEY (district_id)
+    REFERENCES district(id);
+
+-- user_table → rol
+ALTER TABLE user_table
+    ADD CONSTRAINT fk_user_rol
+    FOREIGN KEY (rol_id)
+    REFERENCES rol(id);
+
+-- client_user → client
+ALTER TABLE client_user
+    ADD CONSTRAINT fk_clientuser_client
+    FOREIGN KEY (client_id)
+    REFERENCES client(id);
+
+-- transactions → client
+ALTER TABLE transactions
+    ADD CONSTRAINT fk_transaction_client
+    FOREIGN KEY (client_id)
+    REFERENCES client(id);
+
+-- transactions → client_user
+ALTER TABLE transactions
+    ADD CONSTRAINT fk_transaction_clientuser
+    FOREIGN KEY (client_user_id)
+    REFERENCES client_user(id);
+
+-- transactions → user_table (usuario interno responsable)
+ALTER TABLE transactions
+    ADD CONSTRAINT fk_transaction_user
+    FOREIGN KEY (user_id)
+    REFERENCES user_table(id);
+
+-- transaction_detail → transactions
+ALTER TABLE transaction_detail
+    ADD CONSTRAINT fk_tdetail_transaction
+    FOREIGN KEY (transaction_id)
+    REFERENCES transactions(id);
+
+-- ===================================
+-- FKs Cruzados con LUIS
+-- ===================================
+ALTER TABLE transaction_detail
+ADD CONSTRAINT fk_tdetail_product FOREIGN KEY (product_code) REFERENCES LUIS.product (product_code);
+
+COMMIT;
