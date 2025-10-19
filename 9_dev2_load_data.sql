@@ -1,4 +1,6 @@
-
+-- ====================================================
+-- Datos base del esquema LUIS
+-- ====================================================
 
 -- Limpieza
 DELETE FROM report_detail;
@@ -7,7 +9,11 @@ DELETE FROM product;
 DELETE FROM inventory_movement;
 COMMIT;
 
--- ===== INVENTORY_MOVEMENT (10 Registros) =====
+-- ===================================
+-- INSERTAR DATOS EN TABLAS MAESTRAS
+-- ===================================
+
+-- ===== INVENTORY_MOVEMENT =====
 INSERT INTO inventory_movement (movement_type, amount) VALUES ('Entrada', 50.00);
 INSERT INTO inventory_movement (movement_type, amount) VALUES ('Entrada', 30.00);
 INSERT INTO inventory_movement (movement_type, amount) VALUES ('Salida', 10.00);
@@ -20,7 +26,7 @@ INSERT INTO inventory_movement (movement_type, amount) VALUES ('Salida', 8.00);
 INSERT INTO inventory_movement (movement_type, amount) VALUES ('Entrada', 100.00);
 COMMIT;
 
--- ===== PRODUCT (10 Registros) =====
+-- ===== PRODUCT =====
 -- provider_id: Referencia a ANDRE_DEV.provider(id). Se usan los IDs 1 y 2 que existen.
 INSERT INTO product (product_code, provider_id, name, description, unit, price, stock, status) VALUES ('PROD-001', 1, 'Castaña Amazónica', 'Fruto seco natural de Madre de Dios', 'kg', 25.50, 100, 'activo');
 INSERT INTO product (product_code, provider_id, name, description, unit, price, stock, status) VALUES ('PROD-002', 2, 'Plátano Isla', 'Plátano fresco cultivado en la selva peruana', 'kg', 3.80, 200, 'activo');
