@@ -1,9 +1,8 @@
 -- ====================================================
--- 8_dev1_load_data.sql
 -- Datos base del esquema ANDRE_DEV
 -- ====================================================
 
--- Limpieza opcional
+-- Limpieza
 DELETE FROM transaction_detail;
 DELETE FROM transactions;
 DELETE FROM client_user;
@@ -15,6 +14,10 @@ DELETE FROM district;
 DELETE FROM province;
 DELETE FROM department;
 COMMIT;
+
+-- ===================================
+-- INSERTAR DATOS EN TABLAS MAESTRAS
+-- ===================================
 
 -- ===== DEPARTMENT =====
 INSERT INTO department (name) VALUES ('Lima');
@@ -36,10 +39,10 @@ COMMIT;
 -- ===== ROL =====
 INSERT INTO rol (rol, description) VALUES ('ADMIN', 'Control total del sistema');
 INSERT INTO rol (rol, description) VALUES ('MANAGER', 'Encargado de registrar ventas y gestionar usuarios');
-INSERT INTO rol (rol, description) VALUES ('ANALISTA', 'Análisis de ventas y monitoreo');
+INSERT INTO rol (rol, description) VALUES ('ANALISTA', 'Análisis de ventas y monitorizacion');
 COMMIT;
 
--- ===== USER_TABLE =====
+-- ===== USER_TABLE (Empleados internos) =====
 INSERT INTO user_table (rol_id, names, last_names, email, password, cellphone, doc_type, doc_number)
 VALUES (1, 'Carlos', 'Ramírez', 'carlos.ramirez@empresa.com', 'admin123', '987654321', 'DNI', '45678912');
 
@@ -73,6 +76,10 @@ VALUES (1, 'andres_user@gmail.com', 'andrespass');
 INSERT INTO client_user (client_id, email, password)
 VALUES (2, 'maria_user@gmail.com', 'mariapass');
 COMMIT;
+
+-- ===================================
+-- INSERTAR DATOS EN TRANSACCIONES
+-- ===================================
 
 -- ===== TRANSACTIONS =====
 INSERT INTO transactions (client_id, client_user_id, user_id, total, status)
