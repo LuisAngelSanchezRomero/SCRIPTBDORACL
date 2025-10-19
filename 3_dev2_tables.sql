@@ -31,20 +31,13 @@ END;
 /
 COMMIT;
 
--- ===================================
--- TRANSACTIONAL inventory_movement
--- ===================================
 CREATE TABLE inventory_movement (
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     movement_type VARCHAR2(10) NOT NULL CHECK (movement_type IN ('Entrada', 'Salida')),
     amount NUMBER(10,2) NOT NULL CHECK (amount >= 0),
     movement_date TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL
 );
-COMMIT;
 
--- ===================================
--- MASTER TABLE: product
--- ===================================
 CREATE TABLE product (
     product_code VARCHAR2(50) PRIMARY KEY,
     provider_id NUMBER(10) NOT NULL,
@@ -56,21 +49,13 @@ CREATE TABLE product (
     status NVARCHAR2(10) DEFAULT 'activo' NOT NULL CHECK (status IN ('activo', 'inactivo')),
     created_date DATE DEFAULT SYSDATE NOT NULL
 );
-COMMIT;
 
--- ===================================
--- TRANSACTIONAL report
--- ===================================
 CREATE TABLE report (
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_table_id NUMBER(10) NOT NULL,
     report_date TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL
 );
-COMMIT;
 
--- ===================================
--- TRANSACTIONAL report_detail
--- ===================================
 CREATE TABLE report_detail (
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     transaction_id NUMBER(10) NOT NULL,
