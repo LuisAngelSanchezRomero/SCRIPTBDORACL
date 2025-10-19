@@ -59,7 +59,7 @@ CREATE TABLE report (
 CREATE TABLE report_detail (
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     transaction_id NUMBER(10) NOT NULL,
-    subtotal_trans NUMBER(10,2) NOT NULL CHECK (subtotal_trans >= 0),
-    report_id NUMBER(10) NOT NULL
+    report_id NUMBER(10) NOT NULL,
+    subtotal_trans NUMBER(10,2) NOT NULL CHECK (subtotal_trans >= 0)
 );
 COMMIT;
